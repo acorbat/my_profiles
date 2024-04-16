@@ -1,0 +1,50 @@
+# oh-my-posh init pwsh | Invoke-Expression
+
+New-Alias scoop C:\Users\agucor\scoop\shims\scoop.cmd
+New-Alias zoxide C:\Users\agucor\scoop\shims\zoxide.exe
+New-Alias starship C:\Users\agucor\scoop\apps\starship\current\starship.exe
+New-Alias git C:\Users\agucor\Git\bin\git.exe
+New-Alias chrome 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'
+New-Alias onenote 'C:\Program Files (x86)\Microsoft Office\root\Office16\ONENOTE.EXE'
+New-Alias Rscript 'C:\Users\agucor\AppData\Local\Programs\R\R-4.2.1\bin\Rscript.exe'
+New-Alias Rexe 'C:\Users\agucor\AppData\Local\Programs\R\R-4.2.1\bin\R.exe'
+New-Alias slack 'C:\Users\agucor\AppData\Local\slack\slack.exe'
+New-Alias pycharm 'C:\my_program_files\PyCharm 2022.2.2\bin\pycharm64.exe'
+
+
+Function teams {
+	C:\Users\agucor\AppData\Local\Microsoft\Teams\Update.exe --processStart "Teams.exe"
+}
+
+Function vscode {
+	Start-Process -NoNewWindow 'C:\Users\agucor\AppData\Local\Programs\Microsoft VS Code\Code.exe'
+}
+
+Function mklink ($target, $link) {
+    New-Item -Path $link -ItemType SymbolicLink -Target $target
+}
+
+Import-Module posh-git
+# Import-Module oh-my-posh
+# Set-PoshPrompt -Theme stelbent.minimal
+
+Function Prompt {
+    $Host.UI.RawUI.WindowTitle = $(Get-Location)
+}
+
+Remove-Module psreadline
+Import-Module PSReadLine
+
+Set-PSReadLineOption -PredictionSource History
+
+Invoke-Expression (&starship init powershell)
+
+Invoke-Expression (& {
+    $hook = if ($PSVersionTable.PSVersion.Major -lt 6) { 'prompt' } else { 'pwd' }
+    (zoxide init --hook $hook powershell) -join "`n"
+})
+
+$env:PYTHONIOENCODING="utf-8"
+iex "$(thefuck --alias)"
+
+cd "C:\Users\agucor\OneDrive - Karolinska Institutet"
