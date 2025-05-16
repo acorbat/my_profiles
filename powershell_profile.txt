@@ -1,23 +1,15 @@
 # oh-my-posh init pwsh | Invoke-Expression
 
-New-Alias scoop C:\Users\agucor\scoop\shims\scoop.cmd
-New-Alias zoxide C:\Users\agucor\scoop\shims\zoxide.exe
-New-Alias starship C:\Users\agucor\scoop\apps\starship\current\starship.exe
-New-Alias git C:\Users\agucor\Git\bin\git.exe
-New-Alias chrome 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'
-New-Alias onenote 'C:\Program Files (x86)\Microsoft Office\root\Office16\ONENOTE.EXE'
-New-Alias Rscript 'C:\Users\agucor\AppData\Local\Programs\R\R-4.2.1\bin\Rscript.exe'
-New-Alias Rexe 'C:\Users\agucor\AppData\Local\Programs\R\R-4.2.1\bin\R.exe'
-New-Alias slack 'C:\Users\agucor\AppData\Local\slack\slack.exe'
-New-Alias pycharm 'C:\my_program_files\PyCharm 2022.2.2\bin\pycharm64.exe'
+New-Alias chrome 'C:\Program Files\Google\Chrome\Application\chrome.exe'
+New-Alias slack 'C:\Users\aguco599\AppData\Local\slack\slack.exe'
+New-Alias fiji 'C:\Users\aguco599\Documents\Fiji\Fiji.app\ImageJ-win64.exe'
+New-Alias obsidian 'C:\Program Files\Obsidian\Obsidian.exe'
+New-Alias qupath 'C:\Users\aguco599\AppData\Local\QuPath-0.5.1\QuPath-0.5.1.exe'
 
-
-Function teams {
-	C:\Users\agucor\AppData\Local\Microsoft\Teams\Update.exe --processStart "Teams.exe"
-}
-
-Function vscode {
-	Start-Process -NoNewWindow 'C:\Users\agucor\AppData\Local\Programs\Microsoft VS Code\Code.exe'
+Function morning {
+    chrome
+    slack
+    obsidian
 }
 
 Function mklink ($target, $link) {
@@ -32,7 +24,6 @@ Function Prompt {
     $Host.UI.RawUI.WindowTitle = $(Get-Location)
 }
 
-Remove-Module psreadline
 Import-Module PSReadLine
 
 Set-PSReadLineOption -PredictionSource History
@@ -44,7 +35,17 @@ Invoke-Expression (& {
     (zoxide init --hook $hook powershell) -join "`n"
 })
 
-$env:PYTHONIOENCODING="utf-8"
-iex "$(thefuck --alias)"
+# $env:PYTHONIOENCODING="utf-8"
+# iex "$(thefuck --alias)"
+$env:PATH += ";C:\Users\aguco599\Documents\bftools"
 
-cd "C:\Users\agucor\OneDrive - Karolinska Institutet"
+# Pixi autocompletion
+(& pixi completion --shell powershell) | Out-String | Invoke-Expression
+
+# uv autocompletion
+(& uv generate-shell-completion powershell) | Out-String | Invoke-Expression
+(& uvx --generate-shell-completion powershell) | Out-String | Invoke-Expression
+
+
+
+cd "C:\Users\aguco599\Documents"
